@@ -1,0 +1,25 @@
+language: c
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - cmake
+
+matrix:
+  include:
+    - os: linux
+      env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
+      compiler: gcc
+    - os: linux
+      env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="MinGW Makefiles"
+      compiler: x86_64-w64-mingw32-gcc
+      addons:
+        apt:
+          packages:
+            - gcc-mingw-w64-x86-64
+            - binutils-mingw-w64-x86-64
+
+script:
+  - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" . -Bbuild/
+  - cmake --build build/
