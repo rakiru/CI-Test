@@ -16,5 +16,6 @@ matrix:
             - binutils-mingw-w64-x86-64
 
 script:
+  - cmake --help
   - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" . -Bbuild/
   - cmake --build build/
