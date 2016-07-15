@@ -9,11 +9,16 @@ matrix:
     - os: osx
       env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
       compiler: gcc
+    - os: linux
+      env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles" ICEBALL_CI_CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=.ci/toolchain-mingw64.cmake"
+      compiler: x86_64-w64-mingw32-gcc
+      addons:
+        apt:
+          packages:
+            - gcc-mingw-w64-x86-64
+            - binutils-mingw-w64-x86-64
 
 script:
-  - cmake --help
-  - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" . -Bbuild/
+  - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" $ICEBALL_CI_CMAKE_OPTIONS . -Bbuild/
   - cmake --build build/
-  - ls
-  - ls build
   - build/CI_Test
