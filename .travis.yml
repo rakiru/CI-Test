@@ -10,7 +10,7 @@ matrix:
 #      env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
 #      compiler: gcc
     - os: linux
-      env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles" ICEBALL_CI_CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=.ci/toolchain-mingw64.cmake"
+      env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles" ICEBALL_CI_CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=.ci/toolchain-mingw64.cmake" ICEBALL_RUN_PREFIX=wine64
       compiler: x86_64-w64-mingw32-gcc
       addons:
         apt:
@@ -18,8 +18,9 @@ matrix:
             - gcc-mingw-w64-x86-64
             - g++-mingw-w64-x86-64
             - binutils-mingw-w64-x86-64
+            - wine
 
 script:
   - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" $ICEBALL_CI_CMAKE_OPTIONS . -Bbuild/
   - cmake --build build/
-  - build/CI_Test
+  - $ICEBALL_RUN_PREFIX build/CI_Test
