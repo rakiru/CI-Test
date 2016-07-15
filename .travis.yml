@@ -7,10 +7,12 @@ matrix:
       env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
       compiler: gcc
     - os: osx
-      env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
+      env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
       compiler: gcc
 
 script:
   - cmake --help
   - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" . -Bbuild/
   - cmake --build build/
+  - ls
+  - ls build
