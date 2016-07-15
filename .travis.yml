@@ -16,3 +16,4 @@ script:
   - cmake --build build/
   - ls
   - ls build
+  - build/CI_Test
