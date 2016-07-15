@@ -3,12 +3,12 @@ sudo: false
 
 matrix:
   include:
-    - os: linux
-      env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
-      compiler: gcc
-    - os: osx
-      env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
-      compiler: gcc
+#    - os: linux
+#      env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
+#      compiler: gcc
+#    - os: osx
+#      env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
+#      compiler: gcc
     - os: linux
       env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles" ICEBALL_CI_CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=.ci/toolchain-mingw64.cmake"
       compiler: x86_64-w64-mingw32-gcc
