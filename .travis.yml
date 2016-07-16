@@ -24,6 +24,7 @@ script:
   - cmake --build build/
 
 before_deploy:
+  - chmod +x create_deployment.sh
   - ./create_deployment.sh
 
 deploy:
