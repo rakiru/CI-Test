@@ -31,7 +31,8 @@ deploy:
   provider: releases
   api_key:
     secure: ndD2YHKu6fDTN0smA2pntJyNG8TknCYk3HKT8dLun0veoxuoIgKqpabtvtPNr+HvRJhRZAfPUb5NyECd7Fyu/EHGYNfcz8Fkp6qRZ74HM5t+uCHJX1+Ex2W7Ra18o733e9US9reBiE1EM+ak20+3/6b115QlG5LWvleKssLFVjh2YbSpdGeFCc24FB9patvkKeA+ErxTZZnkwBXnJWPqwYqohRDvzy9on7jyAIufkMz4RT/t+euMjUqoSFyRyQt5NzWrckoN3KD+p6aRWnjRlHukDJ1A1N2XA/kWQM9emmb2rhnAuuyKHQJtlNidSSVgcCFYZQR88M9c0UXoGXkV6/pYm+SWdLTpAZ7qZMI/HXHgZDAqdHi7OidGoQpCquUgoB7zgdfj+4rjip/74fQkWv8KgsGJgY6GOloD6d21wLjlgdE5Rps74vZrxyQPnEsInvrgX+HZpk+uZQy2gd4gqXNboReLiICnuwTezwRQHQjz5fdybsmdCbVEyR78AilqgkrxkA/XA+8rX9d9NH1+g4Pyr4sBzrZ1NCCJORIxf8PmE31EY/57cOBv6GJu+HwllrsbLPDqBNUyUBXHFRtEVqvoS284Y3+ZIwPphV1FiONziWjcmkyaou3oBczIU8qMVDs9/faYOS/auSKIezhClSK0Zv8evF+MV7hcOLBcdKQ=
-  file: "release.zip"
+  file_glob: true
+  file: "release/*"
   skip_cleanup: true
   on:
     tags: true
