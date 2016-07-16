@@ -3,14 +3,14 @@ sudo: false
 
 matrix:
   include:
-#    - os: linux
-#      env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
-#      compiler: gcc
-#    - os: osx
-#      env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
-#      compiler: gcc
     - os: linux
-      env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles" ICEBALL_CI_CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=.ci/toolchain-mingw64.cmake" ICEBALL_RUN_PREFIX=wine64
+      env: ICEBALL_CI_TYPE=linux ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
+      compiler: gcc
+    - os: osx
+      env: ICEBALL_CI_TYPE=osx ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles"
+      compiler: gcc
+    - os: linux
+      env: ICEBALL_CI_TYPE=mingw ICEBALL_CI_CMAKE_GENERATOR="Unix Makefiles" ICEBALL_CI_CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=.ci/toolchain-mingw64.cmake"
       compiler: x86_64-w64-mingw32-gcc
       addons:
         apt:
@@ -18,9 +18,19 @@ matrix:
             - gcc-mingw-w64-x86-64
             - g++-mingw-w64-x86-64
             - binutils-mingw-w64-x86-64
-            - wine
 
 script:
   - cmake -DCMAKE_BUILD_TYPE=Release -G "$ICEBALL_CI_CMAKE_GENERATOR" $ICEBALL_CI_CMAKE_OPTIONS . -Bbuild/
   - cmake --build build/
-  - $ICEBALL_RUN_PREFIX build/CI_Test
+
+before_deploy:
+  - ./create_deployment.sh
+
+deploy:
+  provider: releases
+    api_key:
+      secure: ndD2YHKu6fDTN0smA2pntJyNG8TknCYk3HKT8dLun0veoxuoIgKqpabtvtPNr+HvRJhRZAfPUb5NyECd7Fyu/EHGYNfcz8Fkp6qRZ74HM5t+uCHJX1+Ex2W7Ra18o733e9US9reBiE1EM+ak20+3/6b115QlG5LWvleKssLFVjh2YbSpdGeFCc24FB9patvkKeA+ErxTZZnkwBXnJWPqwYqohRDvzy9on7jyAIufkMz4RT/t+euMjUqoSFyRyQt5NzWrckoN3KD+p6aRWnjRlHukDJ1A1N2XA/kWQM9emmb2rhnAuuyKHQJtlNidSSVgcCFYZQR88M9c0UXoGXkV6/pYm+SWdLTpAZ7qZMI/HXHgZDAqdHi7OidGoQpCquUgoB7zgdfj+4rjip/74fQkWv8KgsGJgY6GOloD6d21wLjlgdE5Rps74vZrxyQPnEsInvrgX+HZpk+uZQy2gd4gqXNboReLiICnuwTezwRQHQjz5fdybsmdCbVEyR78AilqgkrxkA/XA+8rX9d9NH1+g4Pyr4sBzrZ1NCCJORIxf8PmE31EY/57cOBv6GJu+HwllrsbLPDqBNUyUBXHFRtEVqvoS284Y3+ZIwPphV1FiONziWjcmkyaou3oBczIU8qMVDs9/faYOS/auSKIezhClSK0Zv8evF+MV7hcOLBcdKQ=
+    file: "release.zip"
+    skip_cleanup: true
+    on:
+      tags: true
