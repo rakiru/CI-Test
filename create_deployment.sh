@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-zip release.zip build/CI_Test*
+cd build
+zip ../release.zip CI_Test*
+cd ..
